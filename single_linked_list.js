@@ -66,6 +66,34 @@ class LinkedList {
     this.size--;
   }
 
+  pop() {
+    if (!this.head) {
+      return;
+    }
+
+    let current = this.head;
+    let prev = null;
+    while (current.next) {
+      prev = current;
+      current = current.next;
+    }
+
+    this.size--;
+    const data = current.data;
+    prev.next = null;
+    return data;
+  }
+
+  shift() {
+    if (!this.head) {
+      return;
+    }
+    const data = this.head.data;
+    this.head = this.head.next;
+    this.size--;
+    return data;
+  }
+
   print() {
     let current = this.head;
 
@@ -97,3 +125,5 @@ class LinkedList {
     return this.head === null;
   }
 }
+
+const linkedList = new LinkedList()
