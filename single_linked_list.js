@@ -11,7 +11,7 @@ class LinkedList {
     this.size = 0;
   }
 
-  add(data) {
+  push(data) {
     const node = new Node(data);
     if (!this.head) {
       this.head = node;
@@ -23,6 +23,26 @@ class LinkedList {
       current.next = node;
     }
 
+    this.size++;
+  }
+
+  unshift(data) {
+    const node = new Node(data);
+    node.next = this.head;
+    this.head = node;
+    this.size++;
+  }
+
+  splice(index, data) {
+    const node = new Node(data);
+    let current = this.head;
+
+    for (let i = 0; i < index - 1; i++) {
+      current = current.next;
+    }
+
+    node.next = current.next;
+    current.next = node;
     this.size++;
   }
 
