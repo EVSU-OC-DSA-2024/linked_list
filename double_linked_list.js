@@ -15,7 +15,7 @@ class DoubleLinkedList {
 
   push(data) {
     const node = new Node(data);
-    if (!this.head) {
+    if (this.isEmpty()) {
       this.head = node;
       this.tail = node;
     } else {
@@ -28,7 +28,7 @@ class DoubleLinkedList {
 
   unshift(data) {
     const node = new Node(data);
-    if (!this.head) {
+    if (this.isEmpty()) {
       this.head = node;
       this.tail = node;
     } else {
@@ -47,33 +47,56 @@ class DoubleLinkedList {
     }
     node.prev = current;
     node.next = current.next;
+    current.next.prev = node;
     current.next = node;
     this.size++;
   }
 
   remove(data) {
-    if (!this.head) {
+    if (this.isEmpty()) {
       return;
     }
+
     if (this.head.data === data) {
-      this.head = this.head.next;
+      this.shift();
       return;
     }
+
     let current = this.head;
     while (current.next) {
       if (current.next.data === data) {
+        if (current.next === this.tail) {
+          this.pop();
+
+          return;
+        }
+
         current.next = current.next.next;
+        current.next.prev = current;
+
+        this.size--;
         return;
       }
+
       current = current.next;
     }
-    this.size--;
+
+    return null;
   }
 
   pop() {
-    if (!this.head) {
+    if (this.isEmpty()) {
       return;
     }
+
+    if (this.head === this.tail) {
+      const data = this.head.data;
+      this.head = null;
+      this.tail = null;
+      this.size--;
+      return data;
+    }
+
     const data = this.tail.data;
     this.tail = this.tail.prev;
     this.tail.next = null;
@@ -82,9 +105,18 @@ class DoubleLinkedList {
   }
 
   shift() {
-    if (!this.head) {
+    if (this.isEmpty()) {
       return;
     }
+
+    if (this.head === this.tail) {
+      const data = this.head.data;
+      this.head = null;
+      this.tail = null;
+      this.size--;
+      return data;
+    }
+
     const data = this.head.data;
     this.head = this.head.next;
     this.head.prev = null;
@@ -121,3 +153,5 @@ class DoubleLinkedList {
     return this.head === null;
   }
 }
+
+const linkedList = new DoubleLinkedList();
