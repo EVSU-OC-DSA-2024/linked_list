@@ -52,18 +52,18 @@ class LinkedList {
     }
     if (this.head.data === data) {
       this.head = this.head.next;
+      this.size--;
       return;
     }
     let current = this.head;
     while (current.next) {
       if (current.next.data === data) {
         current.next = current.next.next;
+        this.size--;
         return;
       }
       current = current.next;
     }
-
-    this.size--;
   }
 
   pop() {
